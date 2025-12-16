@@ -3,7 +3,7 @@ name: session-analyzer
 description: Analyze ADK apply agent sessions to identify error patterns and generate specific improvements for agent instructions and memory documents.
 license: Apache-2.0
 metadata:
-  version: "2.0"
+  version: "2.1"
   source: "ADK OpenSpec Integration"
   compatible_with: ["ADK", "OpenSpec", "Simics"]
 ---
@@ -11,6 +11,29 @@ metadata:
 # Session Analyzer
 
 Analyzes ADK apply agent session logs to systematically improve agent performance. Reads from `adk_openspec_apply_agent/` directory.
+
+## Python Tools Available
+
+Use `scripts/session_parser.py` for efficient session analysis:
+
+```python
+from session_analyzer.scripts.session_parser import analyze_session
+
+# Complete analysis
+analysis = analyze_session('path/to/session.txt')
+# Returns: metrics, file_reading_compliance, build_attempts, write_operations
+```
+
+**CLI usage:**
+```bash
+python scripts/session_parser.py path/to/session.txt
+```
+
+**Key functions:**
+- `analyze_session(path)` - Complete analysis with all metrics
+- `validate_file_reading_sequence(tool_calls)` - Check protocol compliance
+- `extract_build_attempts(path)` - All builds with success/failure
+- `extract_write_operations(tool_calls)` - Track file modifications
 
 ## Quick Start
 
@@ -23,7 +46,13 @@ Read these files in order:
 
 Then analyze: What are the top 3 error patterns, their root causes, and specific improvements needed?
 
-Create a markdown report: {component}_implementation_analysis_{YYYYMMDD}.md
+Create markdown report: {component}_implementation_analysis_{YYYYMMDD}.md
+```
+
+**With Python tools:**
+```
+Use scripts/session_parser.py to analyze the latest session file.
+Then provide detailed analysis of top error patterns and recommendations.
 ```
 
 ## What It Does
@@ -33,25 +62,25 @@ Create a markdown report: {component}_implementation_analysis_{YYYYMMDD}.md
 - **Generates specific improvements** with exact text to add to instruction files
 - **Creates memory document content** to fill knowledge gaps
 - **Quantifies expected impact** in time savings and error reduction
+- **Validates file reading sequence** against required protocol
 
 ## Analysis Workflow
 
 ### 1. Read Required Files (MANDATORY)
 - Agent instructions: `adk_openspec_apply_agent/apply_agent_instruction.md`
-- Session log: `adk_openspec_apply_agent/*.session.txt` (use .txt not .json - easier to parse)
+- Session log: `adk_openspec_apply_agent/*.session.txt` (use .txt not .json)
 - Memory docs: Browse `openspec-memories/` and read 2-3 relevant files
 
 ### 2. Extract Key Metrics
 ```bash
-# Duration
+# Use Python tool for structured analysis
+python scripts/session_parser.py session.txt
+
+# Or manual extraction
 grep "👤 \[user\]" session.txt | head -1  # Start
 tail -100 session.txt | grep "🤖" | tail -1  # End
-
-# Build attempts
 grep -c "build_simics_project" session.txt
-
-# Error patterns (extract actual identifiers, not just line counts)
-grep "error:" session.txt | grep -o "'[A-Z][A-Z0-9_]*'" | sort | uniq -c | sort -rn
+grep "error:" session.txt | grep -o "'[A-Z][A-Z0-9_]*'" | sort | uniq -c
 ```
 
 ### 3. Identify Root Causes
@@ -83,6 +112,7 @@ REGISTER at bank level, this at register level"
 - Duration: X.X minutes
 - Build attempts: X (Y failed)
 - Final status: Build ✅/❌ | Tests ✅/❌
+- File reading compliance: ✅/❌
 
 ## Top Error Patterns
 ### 1. {Error Type} (X occurrences, Y minutes wasted)
@@ -160,14 +190,16 @@ Before submitting analysis:
 - [ ] Calculated quantified before/after metrics
 - [ ] Focused on patterns (3+ occurrences)
 - [ ] Created markdown report file
+- [ ] Validated file reading sequence compliance
 
 ## Tips
 
-1. **Use .txt files** - Easier than JSON, same information
-2. **Focus on patterns** - 3+ occurrences, not one-off issues
-3. **Be specific** - Quote exact errors with timestamps
-4. **Quantify impact** - Time wasted, builds failed, expected savings
-5. **Provide ready-to-use content** - Exact text for instruction files
+1. **Use Python tools** - Faster and more accurate than manual parsing
+2. **Use .txt files** - Easier than JSON, same information
+3. **Focus on patterns** - 3+ occurrences, not one-off issues
+4. **Be specific** - Quote exact errors with timestamps
+5. **Quantify impact** - Time wasted, builds failed, expected savings
+6. **Provide ready-to-use content** - Exact text for instruction files
 
 ## Troubleshooting
 
