@@ -28,6 +28,12 @@ Transform raw apply agent session data into actionable intelligence that makes A
 
 **⚠️ WARNING**: Analysis without reading these actual files is USELESS and wastes time!
 
+**✅ SUCCESS PATTERN**: When files are read properly, expect comprehensive analysis with:
+- Specific error quotes with timestamps
+- Root cause identification for each issue
+- Quantified improvement recommendations
+- Clear next action items
+
 ### Step 1: Read Required Files
 Execute these in order:
 1. **Read agent instructions** to understand current capabilities and rules
@@ -138,12 +144,107 @@ Based on real ADK apply_agent sessions, here's the comprehensive analysis approa
 - **Error prevention**: 80% of scope-related errors avoided
 ```
 
+## 📄 **Markdown Report Generation - MANDATORY OUTPUT**
+
+### 🎯 **Always Create Analysis Report File**
+After completing analysis, you MUST create a markdown report file in the project directory:
+
+**File naming pattern**: `{component}_implementation_analysis_{YYYYMMDD}.md`
+**Example**: `wdt_implementation_analysis_20251214.md`
+
+**File location**: Same directory as the session file (adk_openspec_apply_agent/ directory)
+
+### 📋 **Required Report Structure** 
+Use this exact template structure:
+
+```markdown
+# {Component} Implementation Analysis from Apply Agent Session
+
+## Session Overview
+- **Date**: [Start time to end time]
+- **Duration**: [X.X minutes]  
+- **Change ID**: [change identifier]
+- **Status**: [Completed/Failed/Partial]
+
+## Implementation Summary
+### [Component] Implementation (All Tasks Completed/Failed)
+- **[Feature 1]**: [Description] ✓/✗
+- **[Feature 2]**: [Description] ✓/✗
+[List all implemented features with status]
+
+### Core Functionality Implemented
+[Bullet points of main functionality]
+
+### Test Files Created  
+[List all test files created]
+
+## Error Patterns and Issues Identified
+### Build Success/Failures
+[Compilation results and fixes applied]
+
+### Test Failures (Root Cause Analysis)  
+[WHY tests failed, not just WHAT failed]
+
+### Specific [Technology] Issues Encountered
+[Technology-specific problems and solutions]
+
+## Agent Instruction Gaps
+### Missing [Error Type] Guidance
+[Specific gaps in current instructions]
+
+### [Infrastructure] Requirements
+[Missing information about setup/requirements]
+
+## Memory Document Improvements Needed
+### [Technical Area] Enhancement
+[Specific additions needed to memory docs]
+
+### [Process Area] Best Practices
+[Documentation improvements for processes]
+
+## Performance and Architecture Assessment
+### Efficient Implementation
+[What was done well architecturally]
+
+### Architectural Soundness  
+[Assessment of design quality]
+
+## Expected Impact Metrics
+### Implementation Success Rate
+[Quantified success percentages]
+
+### Performance Characteristics
+[Technical performance aspects]
+
+## Recommendations for Future Work
+### Immediate Actions
+1. [Highest priority item]
+2. [Second priority item]  
+3. [Third priority item]
+
+### Process Improvements
+1. [Process enhancement]
+2. [Workflow improvement]
+
+## Analysis of Apply Agent Session
+### Time Distribution
+[How time was spent during session]
+
+### Key Learning Points  
+[Important technical insights discovered]
+
+### Overall Quality Assessment
+[Final assessment with rationale]
+```
+
 ## 🚀 Usage Examples & Ready-to-Use Prompts
 
 ### 📋 Quick Analysis (5-10 minutes)
 **Prompt**: 
 ```
-"Read adk_openspec_apply_agent/apply_agent_instruction.md, then analyze the latest .session.txt file in adk_openspec_apply_agent/ directory. Focus on the top 3 error patterns by time impact and provide specific improvement recommendations."
+"Read adk_openspec_apply_agent/apply_agent_instruction.md, then analyze the latest .session.txt file in adk_openspec_apply_agent/ directory. Focus on the top 3 error patterns by time impact and provide specific improvement recommendations.
+
+MANDATORY: Create a markdown analysis report file using the template structure from session-analyzer skill."
 ```
 
 ### 🔍 Deep Dive Analysis (15-20 minutes)  
@@ -151,12 +252,14 @@ Based on real ADK apply_agent sessions, here's the comprehensive analysis approa
 ```
 "Perform comprehensive session analysis:
 1. Read adk_openspec_apply_agent/apply_agent_instruction.md
-2. Read adk_openspec_apply_agent/apply_implement-wdt-initial_20251214_161520.session.txt  
+2. Find and read the latest .session.txt file in adk_openspec_apply_agent/ directory
 3. Read 2-3 key files from openspec-memories/
 4. Provide complete error pattern breakdown with frequencies
 5. Generate specific text additions for agent instruction file
 6. Create new memory documents with example content
-7. Include expected impact metrics for each recommendation"
+7. Include expected impact metrics for each recommendation
+
+MANDATORY: Create a comprehensive markdown analysis report file using the template structure from session-analyzer skill."
 ```
 
 ### 📈 Instruction Improvement Focus
@@ -167,7 +270,9 @@ Based on real ADK apply_agent sessions, here's the comprehensive analysis approa
 2. Read session file to identify instruction gaps
 3. Quote specific examples where current instructions failed
 4. Provide exact text additions/modifications for instruction file
-5. Show before/after comparisons"
+5. Show before/after comparisons
+
+MANDATORY: Create a markdown analysis report focusing on instruction improvements."
 ```
 
 ### 🧠 Memory Document Gap Assessment  
@@ -178,7 +283,37 @@ Based on real ADK apply_agent sessions, here's the comprehensive analysis approa
 2. Check openspec-memories/ for existing knowledge
 3. Identify gaps where better examples could prevent errors  
 4. Generate specific memory document content to fill gaps
-5. Provide ready-to-use markdown content for new memory docs"
+5. Provide ready-to-use markdown content for new memory docs
+
+MANDATORY: Create a markdown analysis report with new memory document content included."
+```
+
+## 📈 **Quality Validation - Is the Analysis Working?**
+
+### ✅ **Good Analysis Indicators**
+If you see these patterns, the skill is working correctly:
+- **File reading confirmed**: Shows actual file paths and content being read
+- **Specific quotes**: References exact error messages from session logs
+- **Timeline analysis**: Mentions timestamps and sequence of events
+- **Quantified metrics**: Provides specific numbers (build attempts, error counts, time spent)
+- **Root cause identification**: Explains WHY errors occurred, not just WHAT happened
+- **Actionable recommendations**: Gives specific text to add to instruction files
+
+### ❌ **Poor Analysis Indicators**
+Stop and re-prompt if you see these warning signs:
+- **Generic advice**: Talks about "common DML patterns" without session specifics
+- **No file reading**: Doesn't mention specific files being read
+- **Vague recommendations**: Says "improve documentation" without specific examples
+- **No error quotes**: Discusses errors but doesn't quote actual error messages
+- **No metrics**: Provides recommendations without expected impact numbers
+
+### 🔧 **When Analysis Goes Wrong - Recovery Prompts**
+```
+"Stop. You're giving generic advice. Please:
+1. Show me the specific files you read
+2. Quote exact error messages from the session
+3. Provide specific text additions for instruction files
+If you haven't read the session file, start over with file reading."
 ```
 
 ## 🔧 Claude Code-Specific Optimization
@@ -187,10 +322,12 @@ Based on real ADK apply_agent sessions, here's the comprehensive analysis approa
 ```
 "Read these files in order before analysis:
 1. adk_openspec_apply_agent/apply_agent_instruction.md
-2. adk_openspec_apply_agent/apply_implement-wdt-initial_20251214_161520.session.txt
+2. Find and read the latest .session.txt file in adk_openspec_apply_agent/ directory (typically named apply_[change-id]_[timestamp].session.txt)
 3. openspec-memories/ (browse and select 2-3 relevant files)
 
-ONLY after reading all files, provide analysis with specific quotes from the session. Do NOT give generic advice without reading the actual files."
+ONLY after reading all files, provide analysis with specific quotes from the session. Do NOT give generic advice without reading the actual files.
+
+MANDATORY OUTPUT: Create a markdown analysis report file in the project directory using the template structure from session-analyzer skill. Name it: {component}_implementation_analysis_{YYYYMMDD}.md"
 ```
 
 ### 🛠️ **Troubleshooting Claude Code Issues**

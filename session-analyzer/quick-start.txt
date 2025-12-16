@@ -1,6 +1,6 @@
 Read these files in order before analysis:
 1. adk_openspec_apply_agent/apply_agent_instruction.md
-2. adk_openspec_apply_agent/apply_implement-wdt-initial_20251214_161520.session.txt
+2. Find and read the latest .session.txt file in adk_openspec_apply_agent/ directory (typically named apply_[change-id]_[timestamp].session.txt)
 3. openspec-memories/ (browse and select 2-3 relevant files)
 
 ONLY after reading all files, provide analysis with specific quotes from the session. Do NOT give generic advice without reading the actual files.
@@ -12,3 +12,13 @@ Focus on:
 - Concrete recommendations with expected impact metrics
 
 Quote exact error messages and reference line numbers from the session file.
+
+MANDATORY OUTPUT: Create a markdown analysis report file in the project directory using pattern: {component}_implementation_analysis_{YYYYMMDD}.md
+
+QUALITY CHECK: Good analysis should include specific error quotes, timestamps, quantified metrics, and actionable recommendations. If you get generic advice without session specifics, use this recovery prompt:
+
+"Stop. You're giving generic advice. Please:
+1. Show me the specific files you read  
+2. Quote exact error messages from the session
+3. Provide specific text additions for instruction files
+If you haven't read the session file, start over with file reading."
