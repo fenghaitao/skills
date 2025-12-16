@@ -39,6 +39,15 @@
         "./theme-factory",
         "./webapp-testing"
       ]
+    },
+    {
+      "name": "adk-skills",
+      "description": "AI Agent Development Kit (ADK) related skills for analyzing and improving agent performance",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./session-analyzer"
+      ]
     }
   ]
 }

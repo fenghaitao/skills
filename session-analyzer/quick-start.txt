@@ -1,0 +1,14 @@
+Read these files in order before analysis:
+1. adk_openspec_apply_agent/apply_agent_instruction.md
+2. adk_openspec_apply_agent/apply_implement-wdt-initial_20251214_161520.session.txt
+3. openspec-memories/ (browse and select 2-3 relevant files)
+
+ONLY after reading all files, provide analysis with specific quotes from the session. Do NOT give generic advice without reading the actual files.
+
+Focus on:
+- Error patterns with frequencies and timestamps
+- Specific agent instruction gaps with evidence
+- Memory document improvements needed
+- Concrete recommendations with expected impact metrics
+
+Quote exact error messages and reference line numbers from the session file.
